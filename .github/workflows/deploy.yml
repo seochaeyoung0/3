@@ -21,11 +21,17 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
+          # 하위 폴더에 있는 package-lock.json 위치를 지정해 줍니다.
+          cache-dependency-path: figma-dashboard/package-lock.json
 
       - name: Install dependencies
+        # figma-dashboard 폴더 안에서 실행하도록 지정합니다.
+        working-directory: figma-dashboard
         run: npm ci
 
       - name: Build
+        # figma-dashboard 폴더 안에서 빌드를 수행합니다.
+        working-directory: figma-dashboard
         run: npm run build
 
       - name: Setup Pages
@@ -34,7 +40,8 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist'
+          # 빌드 완료된 dist 폴더의 경로를 지정해 줍니다.
+          path: './figma-dashboard/dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
